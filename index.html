@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch and get Express</title>
+  <!-- СТИЛИ -->
+  <style>
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .backend {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: pink;
+    margin: 15px auto;
+    padding: 15px;
+    }
+
+    .get-express-title {
+      margin-bottom: 10px;
+      font-size: 25px;
+    }
+
+    .get-express-data {
+      color:red;
+      font-size: 23px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h3>Для того чтобы запросы приходили на фронт и для работы с беком, нужно включить в консоли бэк(npm run start lochost:3000)</h3>
+<!-- Пустой див для вывода запросов -->
+<div class="backend"></div>
+
+<script>
+const backend = document.querySelector('.backend');
+
+
+try {
+  // Запрос на бек - массив
+fetch('http://localhost:3000/posts')
+
+.then(res => {
+// console.log(res)
+return res.json()
+})
+.then(data => {
+console.log(data)
+
+backend.insertAdjacentHTML('afterbegin',
+`<p class="get-express-title">Данные с сервера:</p>
+<p class="get-express-data">${data}</p>`);
+
+})
+} catch(err) {
+console.log('error1',err)
+}
+
+// Пример 2 для объектов запроса - бек
+
+fetch('http://localhost:3000/contacts')
+
+.then(res => {
+// console.log(res)
+return res.json()
+})
+.then(data => {
+// console.log(data)
+
+let datas = data.forEach(item => {
+  backend.insertAdjacentHTML('afterbegin',
+`<p class="get-express-title">Данные с сервера:</p>
+<p class="get-express-data">${item.key} - ${item.id} - ${item.value}</p>`);
+})
+
+
+})
+
+//КОНЕЦ Пример 2 для объектов КОНЕЦ
+
+
+
+
+// Пример для отлова ошибок
+// try {
+//   console.log(1+w)
+// } catch(error) {
+//   console.log(error)
+// }
+
+// / ПРИМЕР обычного запроса фетч
+// fetch('https://jsonplaceholder.typicode.com/todos/1')
+// .then(response => response.json())
+// .then(json => console.log(json))
+</script>
+
+</body>
+</html>
